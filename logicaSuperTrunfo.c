@@ -1,43 +1,116 @@
 #include <stdio.h>
+#include <string.h>
+#include <locale.h>
 
-// Desafio Super Trunfo - Países
-// Tema 2 - Comparação das Cartas
-// Este código inicial serve como base para o desenvolvimento do sistema de comparação de cartas de cidades. 
-// Siga os comentários para implementar cada parte do desafio.
+// Definição da estrutura para armazenar os dados das cidades
+typedef struct
+{
+    char estado[50];
+    int codigo;
+    char nome[50];
+    int populacao;
+    float area;
+    float pib;
+    int pontos_turisticos;
+} Carta;
 
-int main() {
-    // Definição das variáveis para armazenar as propriedades das cidades
-    // Você pode utilizar o código do primeiro desafio
+// Função para cadastrar uma carta
+void cadastrarCarta(Carta *carta)
+{
+    printf("\nCadastro de Carta:\n");
 
-    
-    // Cadastro das Cartas:
-    // Implemente a lógica para solicitar ao usuário que insira os dados das cidades
-    // utilizando a função scanf para capturar as entradas.
-    // utilize o código do primeiro desafio
+    printf("Estado: ");
+    scanf("%49s", carta->estado); // %49s evita buffer overflow
 
-    // Exemplo:
-    // printf("Digite o código da cidade: ");
-    // scanf("%s", codigo);
-    // 
-    // (Repita para cada propriedade)
+    printf("Código: ");
+    scanf("%d", &carta->codigo);
 
-    // Comparação de Cartas:
-    // Desenvolva a lógica de comparação entre duas cartas.
-    // Utilize estruturas de decisão como if, if-else para comparar atributos como população, área, PIB, etc.
+    printf("Nome da cidade: ");
+    fgets(carta->nome, 50, stdin); // ✅ Agora fgets funciona corretamente
 
-    // Exemplo:
-    // if (populacaoA > populacaoB) {
-    //     printf("Cidade 1 tem maior população.\n");
-    // } else {
-    //     printf("Cidade 2 tem maior população.\n");
-    // }
+    getchar(); // ✅ Limpa o ENTER deixado pelo scanf("%d")
 
-    // Exibição dos Resultados:
-    // Após realizar as comparações, exiba os resultados para o usuário.
-    // Certifique-se de que o sistema mostre claramente qual carta venceu e com base em qual atributo.
+    printf("População: ");
+    scanf("%d", &carta->populacao);
 
-    // Exemplo:
-    // printf("A cidade vencedora é: %s\n", cidadeVencedora);
+    printf("Área (km²): ");
+    scanf("%f", &carta->area);
+
+    printf("PIB (bilhões): ");
+    scanf("%f", &carta->pib);
+
+    printf("Número de pontos turísticos: ");
+    scanf("%d", &carta->pontos_turisticos);
+}
+
+// Função para comparar duas cartas com base em um atributo
+void compararCartas(Carta c1, Carta c2, int atributo)
+{
+    printf("\nComparação entre %s e %s:\n", c1.nome, c2.nome);
+    switch (atributo)
+    {
+    case 1:
+        printf("Atributo: População\n");
+        if (c1.populacao > c2.populacao)
+            printf("%s vence!\n", c1.nome);
+        else if (c1.populacao < c2.populacao)
+            printf("%s vence!\n", c2.nome);
+        else
+            printf("Empate!\n");
+        break;
+    case 2:
+        printf("Atributo: Área\n");
+        if (c1.area > c2.area)
+            printf("%s vence!\n", c1.nome);
+        else if (c1.area < c2.area)
+            printf("%s vence!\n", c2.nome);
+        else
+            printf("Empate!\n");
+        break;
+    case 3:
+        printf("Atributo: PIB\n");
+        if (c1.pib > c2.pib)
+            printf("%s vence!\n", c1.nome);
+        else if (c1.pib < c2.pib)
+            printf("%s vence!\n", c2.nome);
+        else
+            printf("Empate!\n");
+        break;
+    case 4:
+        printf("Atributo: Pontos Turísticos\n");
+        if (c1.pontos_turisticos > c2.pontos_turisticos)
+            printf("%s vence!\n", c1.nome);
+        else if (c1.pontos_turisticos < c2.pontos_turisticos)
+            printf("%s vence!\n", c2.nome);
+        else
+            printf("Empate!\n");
+        break;
+    default:
+        printf("Atributo inválido!\n");
+        break;
+    }
+}
+
+int main()
+{
+    setlocale(LC_ALL, "Portuguese_Brazil");
+    Carta carta1, carta2;
+    int atributo;
+
+    printf("Bem-vindo ao Super Trunfo - Países!\n");
+
+    // Cadastro das cartas
+    cadastrarCarta(&carta1);
+    cadastrarCarta(&carta2);
+
+    // Escolha do atributo
+    printf("\nEscolha um atributo para comparação:\n");
+    printf("1 - População\n2 - Área\n3 - PIB\n4 - Pontos Turísticos\n");
+    printf("Digite o número do atributo: ");
+    scanf("%d", &atributo);
+
+    // Comparação das cartas
+    compararCartas(carta1, carta2, atributo);
 
     return 0;
 }
