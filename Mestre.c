@@ -195,6 +195,7 @@ int main()
     printf("Valor: %.2f + %.2f\n", valor1_carta2, valor2_carta2);
     printf("Soma dos atributos da Carta 2: %.2f\n", soma2);
 
+    // if de condicional para comparação das cartas para saber qual a vencedora
     if (soma1 > soma2)
     {
         printf("Resultado: Carta 1 venceu!\n");
